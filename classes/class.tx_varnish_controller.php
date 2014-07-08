@@ -87,7 +87,7 @@ class tx_varnish_controller {
 		/** @var $varnishHttp tx_varnish_http */
 		$varnishHttp = t3lib_div::makeInstance('tx_varnish_http');
 		foreach(self::$extConf['instanceHostnames'] as $currentHost) {
-			$varnishHttp::addCommand('BAN', $currentHost, $command);
+			$varnishHttp::addCommand('BAN', $currentHost, self::$extConf['varnishPort'], $command);
 		}
 
 	}

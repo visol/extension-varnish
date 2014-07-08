@@ -86,7 +86,7 @@ class tx_varnish_http {
 	 * @param	String	$header
 	 */
 
-	public static function addCommand($method, $url, $header='') {
+	public static function addCommand($method, $url, $varnishPort, $header='') {
 
 		// Header is expected as array always
 		if(!is_array($header)) {
@@ -102,6 +102,10 @@ class tx_varnish_http {
 			CURLOPT_TIMEOUT			=> 1,
 			CURLOPT_RETURNTRANSFER  => 1,
 		);
+
+		if (is_numeric($varnishPort)) {
+			$curlOptions[CURLOPT_PORT] = $varnishPort;
+		}
 
 		tx_varnish_GeneralUtility::devLog(__FUNCTION__, $curlOptions);
 
