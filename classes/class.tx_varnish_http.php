@@ -107,7 +107,7 @@ class tx_varnish_http {
 			$curlOptions[CURLOPT_PORT] = $varnishPort;
 		}
 
-		tx_varnish_GeneralUtility::devLog(__FUNCTION__, $curlOptions);
+		tx_varnish_generalutility::devLog(__FUNCTION__, $curlOptions);
 
 		curl_setopt_array($curlHandle, $curlOptions);
 		curl_multi_add_handle(self::$curlQueue, $curlHandle);
@@ -136,7 +136,7 @@ class tx_varnish_http {
 
 	protected static function runQueue() {
 
-		tx_varnish_GeneralUtility::devLog(__FUNCTION__);
+		tx_varnish_generalutility::devLog(__FUNCTION__);
 
 		$running = null;
 		do {
