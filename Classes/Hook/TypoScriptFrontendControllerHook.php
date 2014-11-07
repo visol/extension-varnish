@@ -1,4 +1,6 @@
 <?php
+namespace Snowflake\Varnish\Hook;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -31,7 +33,7 @@
  * @subpackage	tx_varnish
  */
 
-class tx_varnish_hooks_tslib_fe {
+class TypoScriptFrontendControllerHook {
 
 
 	/**
@@ -46,7 +48,7 @@ class tx_varnish_hooks_tslib_fe {
 		// Send Page pid which is used to issue BAN Command against
 		if(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_REV_PROXY') == 1 || $extConf['alwaysSendTypo3Headers'] == 1) {
 			header('TYPO3-Pid: ' . $parent->id);
-			header('TYPO3-Sitename: ' . tx_varnish_generalutility::getSitename());
+			header('TYPO3-Sitename: ' . \Snowflake\Varnish\Utility\GeneralUtility::getSitename());
 		}
 	}
 

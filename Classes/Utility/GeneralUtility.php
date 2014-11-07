@@ -1,4 +1,6 @@
 <?php
+namespace Snowflake\Varnish\Utility;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -21,13 +23,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-/**
- * [CLASS/FUNCTION INDEX of SCRIPT]
- *
- * Hint: use extdeveval to insert/update function index above.
- */
-
-
 
 /**
  * Helper class for varnish
@@ -36,7 +31,7 @@
  * @package	TYPO3
  * @subpackage	tx_varnish
  */
-class tx_varnish_generalutility {
+class GeneralUtility {
 
 	static $extConf;
 

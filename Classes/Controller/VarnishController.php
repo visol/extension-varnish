@@ -1,4 +1,6 @@
 <?php
+namespace Snowflake\Varnish\Controller;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -31,7 +33,7 @@
  * @subpackage	tx_varnish
  */
 
-class tx_varnish_controller {
+class VarnishController {
 
 
 	/**
@@ -73,19 +75,19 @@ class tx_varnish_controller {
 
 	public function clearCache($cacheCmd) {
 
-		tx_varnish_generalutility::devLog('clearCache', array('cacheCmd' => $cacheCmd));
+		\Snowflake\Varnish\Utility\GeneralUtility::devLog('clearCache', array('cacheCmd' => $cacheCmd));
 
 		// if cacheCmd is a single Page, issue BAN Command on this pid
 		// all other Commands ("page", "all") led to a BAN of the whole Cache
 		$cacheCmd = intval($cacheCmd);
 		$command = array(
 			$cacheCmd > 0 ? 'Varnish-Ban-TYPO3-Pid: ' . $cacheCmd : 'Varnish-Ban-All: 1',
-			'Varnish-Ban-TYPO3-Sitename: ' . tx_varnish_generalutility::getSitename()
+			'Varnish-Ban-TYPO3-Sitename: ' . \Snowflake\Varnish\Utility\GeneralUtility::getSitename()
 		);
 
 		// issue command on every Varnish Server
-		/** @var $varnishHttp tx_varnish_http */
-		$varnishHttp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_varnish_http');
+		/** @var $varnishHttp \Snowflake\Varnish\Controller\HttpController */
+		$varnishHttp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Snowflake\Varnish\Controller\HttpController');
 		foreach(self::$extConf['instanceHostnames'] as $currentHost) {
 			$varnishHttp::addCommand('BAN', $currentHost, self::$extConf['varnishPort'], $command);
 		}

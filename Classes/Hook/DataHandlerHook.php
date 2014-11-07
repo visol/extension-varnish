@@ -1,4 +1,6 @@
 <?php
+namespace Snowflake\Varnish\Hook;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -31,15 +33,21 @@
  * @subpackage	tx_varnish
  */
 
-class tx_varnish_hooks_ajax {
+class DataHandlerHook {
 
 
 	/**
-	 * Ban all pages from varnish cache.
+	 * Clear cache hook
+	 *
+	 * @param array $params
+	 * @param \TYPO3\CMS\Core\DataHandling\DataHandler $parent
 	 */
-	public function banAll() {
-		$varnishController = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_varnish_controller');
-		$varnishController->clearCache('all');
+	public function clearCachePostProc($params, &$parent) {
+		/** @var \Snowflake\Varnish\Controller\VarnishController $varnishController */
+		$varnishController = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Snowflake\Varnish\Controller\VarnishController');
+		// use either cacheCmd or uid_page
+		$cacheCmd = isset($params['cacheCmd']) ? $params['cacheCmd'] : $params['uid_page'];
+		$varnishController->clearCache($cacheCmd);
 	}
 
 }

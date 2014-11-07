@@ -26,17 +26,17 @@ if(!defined('TYPO3_MODE')) die ('Access denied.');
 
 switch(TYPO3_MODE) {
 	case 'FE':
-		// Typoscript
-		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:varnish/static/setup.txt">');
+		// TypoScript
+		\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:varnish/Configuration/TypoScript/setup.txt">');
 
 		// Hooks
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = 'EXT:varnish/classes/Hooks/class.tx_varnish_hooks_tslib_fe.php:tx_varnish_hooks_tslib_fe->sendHeader';
+		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['tslib/class.tslib_fe.php']['contentPostProc-output'][] = 'Snowflake\Varnish\Hook\TypoScriptFrontendControllerHook->sendHeader';
 		break;
 	case 'BE':
 		// Hooks
-		$GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['tx_varnish::banAll'] = 'EXT:varnish/classes/Hooks/class.tx_varnish_hooks_ajax.php:tx_varnish_hooks_ajax->banAll';
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['additionalBackendItems']['cacheActions'][] = 'EXT:varnish/classes/Hooks/class.tx_varnish_hooks_clearcachemenu.php:tx_varnish_hooks_clearcachemenu';
-		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] = 'EXT:varnish/classes/Hooks/class.tx_varnish_hooks_tcemain.php:tx_varnish_hooks_tcemain->clearCachePostProc';
+		$GLOBALS['TYPO3_CONF_VARS']['BE']['AJAX']['tx_varnish::banAll'] = 'Snowflake\Varnish\Hook\AjaxHook->banAll';
+		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['additionalBackendItems']['cacheActions'][] = 'Snowflake\Varnish\Hook\ClearCacheMenuHook';
+		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] = 'Snowflake\Varnish\Hook\DataHandlerHook->clearCachePostProc';
 
 		break;
 }

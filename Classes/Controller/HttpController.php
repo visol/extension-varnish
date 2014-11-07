@@ -1,4 +1,6 @@
 <?php
+namespace Snowflake\Varnish\Controller;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -31,7 +33,7 @@
  * @subpackage	tx_varnish
  */
 
-class tx_varnish_http {
+class HttpController {
 
 
 	/**
@@ -48,7 +50,7 @@ class tx_varnish_http {
 	 *
 	 *
 	 * @throws Exception
-	 * @return \tx_varnish_http
+	 * @return \Snowflake\Varnish\Controller\HttpController
 	 */
 
 	public function __construct() {
@@ -81,9 +83,10 @@ class tx_varnish_http {
 	/**
 	 * Add command to cURL Multi-Handle Queue
 	 *
-	 * @param	String	$method
-	 * @param	String	$url
-	 * @param	String	$header
+	 * @param    String $method
+	 * @param    String $url
+	 * @param $varnishPort
+	 * @param    String $header
 	 */
 
 	public static function addCommand($method, $url, $varnishPort, $header='') {
@@ -107,7 +110,7 @@ class tx_varnish_http {
 			$curlOptions[CURLOPT_PORT] = $varnishPort;
 		}
 
-		tx_varnish_generalutility::devLog(__FUNCTION__, $curlOptions);
+		\Snowflake\Varnish\Utility\GeneralUtility::devLog(__FUNCTION__, $curlOptions);
 
 		curl_setopt_array($curlHandle, $curlOptions);
 		curl_multi_add_handle(self::$curlQueue, $curlHandle);
@@ -136,7 +139,7 @@ class tx_varnish_http {
 
 	protected static function runQueue() {
 
-		tx_varnish_generalutility::devLog(__FUNCTION__);
+		\Snowflake\Varnish\Utility\GeneralUtility::devLog(__FUNCTION__);
 
 		$running = null;
 		do {

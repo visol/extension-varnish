@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2014-11-07T09:45:57Z" product-name="varnish">
+		<header/>
+		<body>
+			<trans-unit id="be_clear_cache_menu" xml:space="preserve">
+				<source>Clear Varnish Cache</source>
+			</trans-unit>
+			<trans-unit id="extconf_instancehostnames" xml:space="preserve">
+				<source>Varnish Servers: By default, the Hostname of your Backend Connection is used to connect to Varnish which is usually fine. If your Varnish Server Hostname is different from your Backend Hostname or you run multiple Varnish Instances add those Hostnames here as a Comma separated List.</source>
+			</trans-unit>
+			<trans-unit id="extconf_varnishport" xml:space="preserve">
+				<source>Port for Varnish Servers: By default Port 80 is used.</source>
+			</trans-unit>
+			<trans-unit id="extconf_enabledevlog" xml:space="preserve">
+				<source>Debug: Write Debug Messages about Varnish Actions to devLog.</source>
+			</trans-unit>
+			<trans-unit id="extconf_alwayssendtypo3headers" xml:space="preserve">
+				<source>Always send TYPO3 Headers: Forces TYPO3 to always send TYPO3 cache specific headers. Is also set on the fly according [SYS][reverseProxyIP] and therefore usually not required.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
