@@ -4,7 +4,7 @@ namespace Snowflake\Varnish\Hook;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012  Andri Steiner  <support@snowflake.ch>
+*  (c) 2014 Lorenz Ulrich <lorenz.ulrich@visol.ch>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,31 +29,30 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * This class contains required hooks which are called by TYPO3
  *
- * @author	Andri Steiner  <support@snowflake.ch>
+ * @author	Lorenz Ulrich <lorenz.ulrich@visol.ch>
  * @package	TYPO3
  * @subpackage	tx_varnish
  */
 
-class TypoScriptFrontendControllerHook {
+class CacheAbstractFrontendHook {
+
 
 	/**
-	 * contentPostProc-output hook to add typo3-pid header
+	 * Caching Framework flushByCache hook
 	 *
-	 * @param array $parameters
-	 * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $parent
+	 * @param array $params
+	 * @param \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend $parent
 	 */
-	public function sendHeader(array $parameters, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $parent) {
-		$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['varnish']);
-
-		// Send Page pid which is used to issue BAN Command against
-		if (\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_REV_PROXY') == 1 || $extConf['alwaysSendTypo3Headers'] == 1) {
-			header('TYPO3-Pid: ' . $parent->id);
-			header('TYPO3-Sitename: ' . \Snowflake\Varnish\Utility\GeneralUtility::getSitename());
-			if (!empty($parent->page['cache_tags'])) {
-				// Set unique list of manually set cache tags
-				header('TYPO3-CacheTags: ' . GeneralUtility::uniqueList($parent->page['cache_tags']));
+	public function flushByTag($params, \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend &$parent) {
+		if (GeneralUtility::isFirstPartOfStr($params['tag'], 'varnish_')) {
+			$cacheTagParts = GeneralUtility::trimExplode('_', $params['tag']);
+			if (!empty($cacheTagParts[1])) {
+				/** @var \Snowflake\Varnish\Controller\VarnishController $varnishController */
+				$varnishController = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Snowflake\Varnish\Controller\VarnishController');
+				$varnishController->flushCacheByTag($cacheTagParts[1]);
 			}
 		}
+
 	}
 
 }

@@ -94,5 +94,34 @@ class VarnishController {
 
 	}
 
+	/**
+	 * flushCacheByTag
+	 * Executed by the TypoScriptFrontendControllerHook
+	 *
+	 * @param $tag
+	 * @return void
+	 */
+	public function flushCacheByTag($tag) {
+
+		\Snowflake\Varnish\Utility\GeneralUtility::devLog('flushCacheByTag', array('tag' => $tag));
+
+		if (!empty($tag)) {
+
+			$command = array(
+				'Varnish-Ban-TYPO3-CacheTag: ' . $tag,
+				'Varnish-Ban-TYPO3-Sitename: ' . \Snowflake\Varnish\Utility\GeneralUtility::getSitename()
+			);
+
+			// issue command on every Varnish Server
+			/** @var $varnishHttp \Snowflake\Varnish\Controller\HttpController */
+			$varnishHttp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Snowflake\Varnish\Controller\HttpController');
+			foreach (self::$extConf['instanceHostnames'] as $currentHost) {
+				$varnishHttp::addCommand('BAN', $currentHost, self::$extConf['varnishPort'], $command);
+			}
+
+		}
+
+	}
+
 }
 

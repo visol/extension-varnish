@@ -66,6 +66,11 @@ sub vcl_recv {
 			error 200 "Banned TYPO3 pid " + req.http.Varnish-Ban-TYPO3-Pid;
 		}
 
+		if(req.http.Varnish-Ban-TYPO3-CacheTag && req.http.Varnish-Ban-TYPO3-Sitename) {
+			ban("obj.http.TYPO3-CacheTags ~ " + req.http.Varnish-Ban-TYPO3-CacheTag + " && obj.http.TYPO3-Sitename == " + req.http.Varnish-Ban-TYPO3-Sitename);
+			error 202 "Banned TYPO3 CacheTag " + req.http.Varnish-Ban-TYPO3-CacheTag + " on site " + req.http.Varnish-Ban-TYPO3-Sitename;
+		}
+
 	}
 
 	# Set X-Forwarded-For Header
