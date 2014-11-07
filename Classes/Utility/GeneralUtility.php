@@ -41,7 +41,7 @@ class GeneralUtility {
 	 */
 	protected static function loadExtConf() {
 		// load Extension Configuration
-		if(!isset(self::$extConf)) {
+		if (!isset(self::$extConf)) {
 			self::$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['varnish']);
 		}
 	}
@@ -55,7 +55,7 @@ class GeneralUtility {
 	 */
 	public static function devLog($functionName, $additionalData = '') {
 		self::loadExtConf();
-		if(self::$extConf['enableDevLog']) {
+		if (self::$extConf['enableDevLog']) {
 			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog($functionName, 'varnish', 0, $additionalData);
 		}
 	}

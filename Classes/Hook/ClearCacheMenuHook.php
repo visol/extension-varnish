@@ -46,10 +46,10 @@ class ClearCacheMenuHook implements \TYPO3\CMS\Backend\Toolbar\ClearCacheActions
 	public function manipulateCacheActions(&$cacheActions, &$optionValues) {
 		$title = $GLOBALS['LANG']->sL('LLL:EXT:varnish/Resources/Private/Language/locallang.xlf:be_clear_cache_menu');
 		$cacheActions[] = array(
-			'id'    => 'varnish',
+			'id' => 'varnish',
 			'title' => $title,
-			'href'  => 'ajax.php?ajaxID=tx_varnish::banAll',
-			'icon'  => '<img src="/'.$GLOBALS['TYPO3_LOADED_EXT']['varnish']['siteRelPath'].'ext_icon.gif" title="'.$title.'" alt="'.$title.'" />',
+			'href' => 'ajax.php?ajaxID=tx_varnish::banAll',
+			'icon' => '<img src="/' . $GLOBALS['TYPO3_LOADED_EXT']['varnish']['siteRelPath'] . 'ext_icon.gif" title="' . $title . '" alt="' . $title . '" />',
 		);
 	}
 

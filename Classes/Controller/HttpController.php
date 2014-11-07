@@ -2,35 +2,35 @@
 namespace Snowflake\Varnish\Controller;
 
 /***************************************************************
-*  Copyright notice
-*
-*  (c) 2012  Andri Steiner  <support@snowflake.ch>
-*  All rights reserved
-*
-*  This script is part of the TYPO3 project. The TYPO3 project is
-*  free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  The GNU General Public License can be found at
-*  http://www.gnu.org/copyleft/gpl.html.
-*
-*  This script is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  This copyright notice MUST APPEAR in all copies of the script!
-***************************************************************/
+ *  Copyright notice
+ *
+ *  (c) 2012  Andri Steiner  <support@snowflake.ch>
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 
 /**
  * This class communicates with the varnish server
  *
- * @author	Andri Steiner  <support@snowflake.ch>
- * @package	TYPO3
- * @subpackage	tx_varnish
+ * @author    Andri Steiner  <support@snowflake.ch>
+ * @package    TYPO3
+ * @subpackage    tx_varnish
  */
 
 class HttpController {
@@ -44,12 +44,11 @@ class HttpController {
 	protected static $curlQueue;
 
 
-
 	/**
 	 * Class constructor
 	 *
 	 *
-	 * @throws Exception
+	 * @throws \Exception
 	 * @return \Snowflake\Varnish\Controller\HttpController
 	 */
 
@@ -57,7 +56,7 @@ class HttpController {
 
 		// check whether the cURL PHP Extension is loaded
 		if (!extension_loaded('curl')) {
-			throw new Exception('The cURL PHP Extension is required by ext_varnish.');
+			throw new \Exception('The cURL PHP Extension is required by ext_varnish.');
 		}
 
 		// initialize cURL Multi-Handle Queue
@@ -69,7 +68,7 @@ class HttpController {
 	/**
 	 * Class destructor
 	 *
-	 * @return	void
+	 * @return    void
 	 */
 
 	public function __destruct() {
@@ -89,21 +88,21 @@ class HttpController {
 	 * @param    String $header
 	 */
 
-	public static function addCommand($method, $url, $varnishPort, $header='') {
+	public static function addCommand($method, $url, $varnishPort, $header = '') {
 
 		// Header is expected as array always
-		if(!is_array($header)) {
+		if (!is_array($header)) {
 			$header = array($header);
 		}
 
 		// create Handle and at it to the Multi-Handle Queue
 		$curlHandle = curl_init();
 		$curlOptions = array(
-			CURLOPT_CUSTOMREQUEST	=> $method,
-			CURLOPT_URL				=> $url,
-			CURLOPT_HTTPHEADER		=> $header,
-			CURLOPT_TIMEOUT			=> 1,
-			CURLOPT_RETURNTRANSFER  => 1,
+			CURLOPT_CUSTOMREQUEST => $method,
+			CURLOPT_URL => $url,
+			CURLOPT_HTTPHEADER => $header,
+			CURLOPT_TIMEOUT => 1,
+			CURLOPT_RETURNTRANSFER => 1,
 		);
 
 		if (is_numeric($varnishPort)) {
@@ -121,7 +120,7 @@ class HttpController {
 	/**
 	 * Initialize cURL Multi-Handle Queue
 	 *
-	 * @return	void
+	 * @return    void
 	 */
 
 	protected static function initQueue() {
@@ -134,17 +133,17 @@ class HttpController {
 	/**
 	 * Execute cURL Mutli-Handle Queue
 	 *
-	 * @return	void
+	 * @return    void
 	 */
 
 	protected static function runQueue() {
 
 		\Snowflake\Varnish\Utility\GeneralUtility::devLog(__FUNCTION__);
 
-		$running = null;
+		$running = NULL;
 		do {
 			curl_multi_exec(self::$curlQueue, $running);
-		} while($running);
+		} while ($running);
 
 		// destroy Handle which is not required anymore
 		curl_multi_close(self::$curlQueue);
