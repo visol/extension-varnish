@@ -42,9 +42,7 @@ class tx_varnish_hooks_clearcachemenu implements backend_cacheActionsHook {
 	 * @param array $optionValues
 	 */
 	public function manipulateCacheActions(&$cacheActions, &$optionValues) {
-		/** @var $LANG language */
-		global $LANG;
-		$title = $LANG->sL('LLL:EXT:varnish/locallang.xml:be_clear_cache_menu');
+		$title = $GLOBALS['LANG']->sL('LLL:EXT:varnish/locallang.xml:be_clear_cache_menu');
 		$cacheActions[] = array(
 			'id'    => 'varnish',
 			'title' => $title,
@@ -54,10 +52,3 @@ class tx_varnish_hooks_clearcachemenu implements backend_cacheActionsHook {
 	}
 
 }
-
-global $TYPO3_CONF_VARS;
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/Hooks/class.tx_varnish_hooks_clearcachemenu.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/Hooks/class.tx_varnish_hooks_clearcachemenu.php']);
-}
-
-?>

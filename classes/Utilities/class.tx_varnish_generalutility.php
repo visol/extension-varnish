@@ -61,7 +61,7 @@ class tx_varnish_generalutility {
 	public static function devLog($functionName, $additionalData = '') {
 		self::loadExtConf();
 		if(self::$extConf['enableDevLog']) {
-			t3lib_div::devLog($functionName, 'varnish', 0, $additionalData);
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog($functionName, 'varnish', 0, $additionalData);
 		}
 	}
 
@@ -71,12 +71,6 @@ class tx_varnish_generalutility {
 	 * @return mixed
 	 */
 	public static function getSitename() {
-		return t3lib_div::hmac($GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename']);
+		return \TYPO3\CMS\Core\Utility\GeneralUtility::hmac($GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename']);
 	}
 }
-
-global $TYPO3_CONF_VARS;
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/Utilities/class.tx_varnish_generalutility.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/Utilities/class.tx_varnish_generalutility.php']);
-}
-?>

@@ -24,7 +24,7 @@
 
 if(!defined('TYPO3_MODE')) die ('Access denied.');
 
-$extPath = t3lib_extMgm::extPath('varnish');
+$extPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('varnish');
 return array(
 	'tx_varnish_controller'			=> $extPath . 'classes/class.tx_varnish_controller.php',
 	'tx_varnish_http'			=> $extPath . 'classes/class.tx_varnish_http.php',

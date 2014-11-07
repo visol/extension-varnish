@@ -125,7 +125,7 @@ Requirements
 Extension Installation/Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Set :php:`$TYPO3_CONF_VARS['SYS']['reverseProxyIP']` to the IP address
+- Set :php:`$GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxyIP']` to the IP address
   which is used by Varnish to connect to your Webserver
 - Install this extension
 - By default, TYPO3 sends BAN commands to Varnish to the hostname which is used

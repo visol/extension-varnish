@@ -54,11 +54,11 @@ class tx_varnish_controller {
 
 		// assign default values
 		if(empty(self::$extConf['instanceHostnames'])) {
-			self::$extConf['instanceHostnames'] = t3lib_div::getIndpEnv('HTTP_HOST');
+			self::$extConf['instanceHostnames'] = \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_HOST');
 		}
 
 		// convert Comma separated List into a Array 
-		self::$extConf['instanceHostnames'] = t3lib_div::trimExplode(',', self::$extConf['instanceHostnames']);
+		self::$extConf['instanceHostnames'] = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', self::$extConf['instanceHostnames']);
 
 	}
 
@@ -67,7 +67,7 @@ class tx_varnish_controller {
 	 * clearCache
 	 * Executed by the clearCachePostProc Hook 
 	 * 
-	 * @param	string		$cacheCmd cache Command, see Description in t3lib_tcemain
+	 * @param	string		$cacheCmd cache Command, see Description in \TYPO3\CMS\Core\DataHandling\DataHandler
 	 * @return	void
 	 */
 
@@ -85,7 +85,7 @@ class tx_varnish_controller {
 
 		// issue command on every Varnish Server
 		/** @var $varnishHttp tx_varnish_http */
-		$varnishHttp = t3lib_div::makeInstance('tx_varnish_http');
+		$varnishHttp = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_varnish_http');
 		foreach(self::$extConf['instanceHostnames'] as $currentHost) {
 			$varnishHttp::addCommand('BAN', $currentHost, self::$extConf['varnishPort'], $command);
 		}
@@ -94,9 +94,3 @@ class tx_varnish_controller {
 
 }
 
-global $TYPO3_CONF_VARS;
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/class.tx_varnish_controller.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/class.tx_varnish_controller.php']);
-}
-
-?>

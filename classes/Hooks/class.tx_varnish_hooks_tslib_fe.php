@@ -38,23 +38,16 @@ class tx_varnish_hooks_tslib_fe {
 	 * contentPostProc-output hook to add typo3-pid header
 	 *
 	 * @param array    $parameters
-	 * @param tslib_fe $parent
+	 * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $parent
 	 */
-	public function sendHeader(array $parameters, tslib_fe $parent) {
+	public function sendHeader(array $parameters, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $parent) {
 		$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['varnish']);
 
 		// Send Page pid which is used to issue BAN Command against
-		if(t3lib_div::getIndpEnv('TYPO3_REV_PROXY') == 1 || $extConf['alwaysSendTypo3Headers'] == 1) {
+		if(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_REV_PROXY') == 1 || $extConf['alwaysSendTypo3Headers'] == 1) {
 			header('TYPO3-Pid: ' . $parent->id);
 			header('TYPO3-Sitename: ' . tx_varnish_generalutility::getSitename());
 		}
 	}
 
 }
-
-global $TYPO3_CONF_VARS;
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/Hooks/class.tx_varnish_hooks_tslib_fe.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/Hooks/class.tx_varnish_hooks_tslib_fe.php']);
-}
-
-?>

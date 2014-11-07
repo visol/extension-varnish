@@ -38,14 +38,8 @@ class tx_varnish_hooks_ajax {
 	 * Ban all pages from varnish cache.
 	 */
 	public function banAll() {
-		$varnishController = t3lib_div::makeInstance('tx_varnish_controller');
+		$varnishController = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_varnish_controller');
 		$varnishController->clearCache('all');
 	}
 
 }
-
-global $TYPO3_CONF_VARS;
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/Hooks/class.tx_varnish_hooks_ajax.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/varnish/classes/Hooks/class.tx_varnish_hooks_ajax.php']);
-}
-?>
