@@ -1,0 +1,7 @@
+{
+	"name": "snowflake/varnish",
+	"type": "typo3-cms-extension",
+	"description": "Varnish Connector",
+	"homepage": "https://github.com/visol/extension-varnish",
+	"license": ["GPL-2.0+"]
+}
